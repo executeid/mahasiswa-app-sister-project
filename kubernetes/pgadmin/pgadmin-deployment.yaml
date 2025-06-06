@@ -30,6 +30,8 @@ spec:
                 secretKeyRef:
                   name: pgadmin-credentials
                   key: PGADMIN_DEFAULT_PASSWORD
+            - name: PGADMIN_EXTERNAL_URL
+              value: "http://10.10.0.51/pgadmin" # Ganti dengan URL eksternal Anda
           volumeMounts:
             - name: pgadmin-data
               mountPath: /var/lib/pgadmin
