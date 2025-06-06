@@ -1,6 +1,6 @@
-# Mahasiswa App for Distribute Systems Project
+# Students App for Distribute Systems Project
 
-A Semester Project build of microservices-based academic management system for universities, built with Node.js, Kafka, PostgreSQL, and Kubernetes. This project is designed to handle student, academic, and logging services in a scalable and maintainable architecture.
+A Semester Final Project build of microservices-based academic management system for universities, built with Node.js, Kafka, PostgreSQL, and Kubernetes. This project is designed to handle student, academic, and logging services in a scalable and maintainable architecture.
 
 ## Features
 
@@ -49,7 +49,7 @@ kubernetes/            # Kubernetes manifests for deployment
    cd ../mahasiswa-api && npm install
    cd ../consumer-service && npm install
    ```
-3. Set up environment variables (see `.env.example` in each service or create your own `.env` files).
+3. Set up environment variables (see `*secret.yaml` in each service or create your own files).
 4. Start services locally (example for academic-service):
    ```bash
    cd academic-service
