@@ -1,6 +1,6 @@
-# Mahasiswa App Sister Project
+# Mahasiswa App for Distribute Systems Project
 
-A microservices-based academic management system for universities, built with Node.js, Kafka, PostgreSQL, and Kubernetes. This project is designed to handle student, academic, and logging services in a scalable and maintainable architecture.
+A Semester Project build of microservices-based academic management system for universities, built with Node.js, Kafka, PostgreSQL, and Kubernetes. This project is designed to handle student, academic, and logging services in a scalable and maintainable architecture.
 
 ## Features
 
@@ -100,4 +100,4 @@ MIT License
 
 ---
 
-> Made with ❤️ for scalable academic systems.
+> Made with ❤️ by Execute to mark the end of Semester 4
