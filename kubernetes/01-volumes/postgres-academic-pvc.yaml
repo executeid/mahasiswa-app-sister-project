@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-academic-pv-claim
+spec:
+  storageClassName: local-path # Pastikan ini sesuai dengan provisioner Anda
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi # Sesuaikan ukuran sesuai kebutuhan

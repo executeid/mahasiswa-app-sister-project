@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mahasiswa-api-ingress
+  annotations:
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2 # disabled supaya path tetap utuh
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /mahasiswa
+            pathType: Prefix
+            backend:
+              service:
+                name: mahasiswa-api-service
+                port:
+                  number: 80
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: mahasiswa-api-service
+                port:
+                  number: 80

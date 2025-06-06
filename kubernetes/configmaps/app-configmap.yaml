@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default # Atau namespace spesifik Anda
+data:
+  # Konfigurasi Database Mahasiswa
+  DB_USER_MAHASISWA: mahasiswa_user
+  DB_NAME_MAHASISWA: mahasiswa_db
+  DB_HOST_MAHASISWA: postgres-mahasiswa-service # Nama service Kubernetes
+  DB_PORT_MAHASISWA: "5432"
+
+  # Konfigurasi Database Academic BARU
+  DB_USER_ACADEMIC: academic_user
+  DB_NAME_ACADEMIC: academic_db
+  DB_HOST_ACADEMIC: postgres-academic-service
+  DB_PORT_ACADEMIC: "5432"
+
+  # Konfigurasi Database Log
+  DB_USER_LOG: log_user
+  DB_NAME_LOG: log_db
+  DB_HOST_LOG: postgres-log-service # Nama service Kubernetes
+  DB_PORT_LOG: "5432"
+
+  # Konfigurasi Kafka
+  KAFKA_BROKER: kafka-service:9092 # Nama service Kubernetes Kafka
+  KAFKA_TOPIC: mahasiswa_events
+  KAFKA_CONSUMER_GROUP: mahasiswa-event-group
+
+  # Kafka Topics BARU untuk Academic Service
+  KAFKA_TOPIC_ACADEMIC_EVENTS: academic_events
+
+  # Port untuk Mahasiswa API
+  API_PORT: "3000"

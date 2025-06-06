@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer-service
+spec:
+  selector:
+    app: consumer-service
+  # Consumer service tidak perlu diekspos keluar, cukup diakses internal oleh kubelet untuk health check
+  # atau jika ada service lain yang memantau statusnya.
+  ports:
+    - protocol: TCP
+      port: 8080 # Contoh port untuk internal monitoring (jika ada)
+      targetPort: 8080
+  type: ClusterIP

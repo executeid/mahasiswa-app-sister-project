@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: academic-service-deployment
+  labels:
+    app: academic-service
+spec:
+  replicas: 2 # Untuk Load Balancing dan ketersediaan
+  selector:
+    matchLabels:
+      app: academic-service
+  template:
+    metadata:
+      labels:
+        app: academic-service
+    spec:
+      containers:
+        - name: academic-service
+          image: execute1d/academic-service:1.0 # Ganti dengan image Docker Anda
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3001
+          envFrom:
+            - configMapRef:
+                name: app-config
+          env:
+            - name: DB_USER_ACADEMIC
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_USER_ACADEMIC
+            - name: DB_NAME_ACADEMIC
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_NAME_ACADEMIC
+            - name: DB_HOST_ACADEMIC
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_HOST_ACADEMIC
+            - name: DB_PORT_ACADEMIC
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_PORT_ACADEMIC
+            - name: DB_PASSWORD_ACADEMIC # Ambil password dari Secret
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: POSTGRES_PASSWORD_ACADEMIC
+            - name: JWT_SECRET # Secret untuk JWT
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET_KEY
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3001
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"

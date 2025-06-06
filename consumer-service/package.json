@@ -1,0 +1,21 @@
+{
+  "name": "consumer-service",
+  "version": "1.0.0",
+  "description": "Kafka Consumer for Mahasiswa events",
+  "main": "consumer.js",
+  "scripts": {
+    "start": "node consumer.js",
+    "dev": "nodemon consumer.js"
+  },
+  "keywords": [],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "pg": "^8.11.5",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

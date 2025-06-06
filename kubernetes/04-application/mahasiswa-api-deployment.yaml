@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mahasiswa-api-deployment
+  labels:
+    app: mahasiswa-api
+spec:
+  replicas: 2 # Untuk Load Balancing dan ketersediaan
+  selector:
+    matchLabels:
+      app: mahasiswa-api
+  template:
+    metadata:
+      labels:
+        app: mahasiswa-api
+    spec:
+      containers:
+        - name: mahasiswa-api
+          image: execute1d/mahasiswa-api:1.0 # Ganti dengan image Docker Anda
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: app-config # Menggunakan ConfigMap untuk konfigurasi
+          env:
+            - name: DB_PASSWORD # Ambil password dari Secret
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: POSTGRES_PASSWORD_MAHASISWA
+          livenessProbe: # Health check untuk memastikan aplikasi berjalan
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe: # Health check untuk memastikan aplikasi siap menerima trafik
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          resources: # Batasan sumber daya untuk stabilitas
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
