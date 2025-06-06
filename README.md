@@ -1,4 +1,4 @@
-# Students App for Distribute Systems Project
+# Students App for Distributed Systems Project
 
 A Semester Final Project build of microservices-based academic management system for universities, built with Node.js, Kafka, PostgreSQL, and Kubernetes. This project is designed to handle student, academic, and logging services in a scalable and maintainable architecture.
 
