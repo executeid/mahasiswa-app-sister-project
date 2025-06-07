@@ -4,10 +4,16 @@ const { Pool } = require('pg');
 const axios = require('axios');
 const moment = require('moment'); // Diperlukan untuk getCurrentAcademicWeek
 
+process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
+
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const createKafkaConsumer = (brokers, groupId, topic) => {
-    const kafka = new Kafka({ clientId: `test-consumer-${groupId}-${Date.now()}`, brokers });
+    const kafka = new Kafka({
+        clientId: `test-consumer-<span class="math-inline">\{groupId\}\-</span>{Date.now()}`,
+        brokers: brokers, // Use the brokers array directly
+        // createPartitioner: Partitioners.LegacyPartitioner // Uncomment if Partitioners is defined and needed
+    });
     const consumer = kafka.consumer({ groupId });
     let messages = [];
 
