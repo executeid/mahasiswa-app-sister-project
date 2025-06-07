@@ -10,7 +10,28 @@ const startConsumer = async () => {
     logger.info('Connected to Log/Analytics Database.');
 
     await kafkaConsumerService.startConsuming('mahasiswa_events', 'mahasiswa-event-group', async ({ topic, partition, message }) => {
-      // ... (Logika penanganan pesan mahasiswa yang sudah ada) ...
+        // Log for debugging (bisa dihapus nanti)
+        console.log(`[DEBUG_CONSUMER_MAHASISWA_RAW] Received RAW message from <span class="math-inline">\{topic\}\:</span>{partition}. Offset: ${message.offset}`); 
+        try {
+            const payload = JSON.parse(message.value.toString());
+            console.log(`[DEBUG_CONSUMER_MAHASISWA_PARSED] Payload parsed: ${JSON.stringify(payload)}`); 
+            logger.info(`Received message from <span class="math-inline">\{topic\}\:</span>{partition}: ${JSON.stringify(payload)}`);
+
+            // Log event to Log/Analytics DB
+            await dbLogService.insertLog({
+                event_type: payload.type,
+                event_data: payload.data,
+                timestamp_api_sent: payload.timestamp_api_sent,
+                timestamp_consumer_received: Date.now(),
+                trace_id: payload.trace_id,
+                api_processing_latency_ns: payload.api_processing_latency_ns
+            });
+            logger.info(`Event logged to DB for trace_id: ${payload.trace_id}`);
+
+        } catch (error) {
+            console.error(`[DEBUG_CONSUMER_MAHASISWA_ERROR] Error in eachMessage handler: ${error.message}`, error.stack);
+            logger.error(`Error processing message from Kafka: ${error.message}`, error.stack);
+        }
     });
 
     // Start consuming academic events
