@@ -1,8 +1,8 @@
 const { Kafka } = require('kafkajs');
 const logger = require('../utils/logger');
 
-// Use Pod IP or NodePort for brokers, not 'kafka-service' if running outside cluster
-const KAFKA_BROKERS = [process.env.KAFKA_BROKER || '10.244.1.105:9092'];
+// Use service name for brokers inside the cluster
+const KAFKA_BROKERS = [process.env.KAFKA_BROKER || 'kafka-service:9092'];
 
 const kafka = new Kafka({
   clientId: 'consumer-service',
