@@ -1,12 +1,9 @@
 const { Kafka } = require('kafkajs');
 const logger = require('../utils/logger');
 
-// Use service name for brokers inside the cluster
-const KAFKA_BROKERS = [process.env.KAFKA_BROKER || 'kafka-service:9092'];
-
 const kafka = new Kafka({
   clientId: 'consumer-service',
-  brokers: KAFKA_BROKERS,
+  brokers: [process.env.KAFKA_BROKER || 'kafka-service:9092'],
 });
 
 let consumer = null;
