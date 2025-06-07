@@ -1,0 +1,19 @@
+{
+  "name": "system-tests",
+  "version": "1.0.0",
+  "description": "Automated system tests for Mahasiswa Microservices",
+  "main": "testRunner.js",
+  "scripts": {
+    "test": "node testRunner.js"
+  },
+  "keywords": [],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "kafkajs": "^2.2.4",
+    "pg": "^8.11.5",
+    "uuid": "^9.0.1",
+    "moment": "^2.30.1"
+  }
+}

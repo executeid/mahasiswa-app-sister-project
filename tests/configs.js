@@ -1,0 +1,60 @@
+// tests/configs.js
+const { v4: uuidv4 } = require('uuid');
+
+const KUBERNETES_INGRESS_IP = "10.10.0.51"; // IP Worker Node Anda (misal: k8s-worker-01)
+const KUBERNETES_INGRESS_NODEPORT = "31472"; // NodePort yang diekspos Ingress Nginx Anda
+
+const BASE_URL = `http://${KUBERNETES_INGRESS_IP}:${KUBERNETES_INGRESS_NODEPORT}`;
+
+const API_ENDPOINTS = {
+    mahasiswa: `${BASE_URL}/mahasiswa`,
+    academic: `${BASE_URL}/api/academic`,
+    health: `${BASE_URL}/health` // Contoh endpoint health check Mahasiswa API
+};
+
+// Pastikan IP dan Port Kafka Pod internal cluster Anda benar
+// Gunakan 'kubectl get pods -l app=kafka -o wide' untuk mendapatkan IP Pod Kafka yang sedang Running
+// Atau gunakan nama service jika script ini dijalankan di dalam cluster.
+// Contoh di sini menggunakan IP Pod Kafka karena script dijalankan dari luar cluster.
+const KAFKA_BROKERS = ['10.244.2.90:9092']; // Ganti dengan IP Pod Kafka yang Running (misal: 10.244.X.Y:9092)
+const KAFKA_TOPIC_MAHASISWA_EVENTS = 'mahasiswa_events';
+const KAFKA_TOPIC_ACADEMIC_EVENTS = 'academic_events';
+
+// Pastikan IP Pod PostgreSQL Log DB Anda benar
+// Gunakan 'kubectl get pods -l app=postgres-log -o wide' untuk mendapatkan IP Podnya
+const DB_CONFIG_LOG = {
+    user: 'log_user',
+    host: '10.244.1.83', // Ganti dengan IP Pod PostgreSQL Log DB yang Running
+    database: 'log_db',
+    password: 'akmal', // Ganti dengan password log_user Anda
+    port: 5432,
+};
+
+// Pastikan IP Pod PostgreSQL Mahasiswa DB Anda benar
+// Gunakan 'kubectl get pods -l app=postgres-mahasiswa -o wide' untuk mendapatkan IP Podnya
+const DB_CONFIG_MAHASISWA = {
+    user: 'mahasiswa_user',
+    host: '10.244.2.70', // Ganti dengan IP Pod PostgreSQL Mahasiswa DB yang Running
+    database: 'mahasiswa_db',
+    password: 'akmal', // Ganti dengan password mahasiswa_user Anda
+    port: 5432,
+};
+
+// Kredensial Dosen untuk Testing di Academic Service
+const LECTURER_CREDENTIALS = {
+    nidn: "TEST_D001",
+    name: "Dr. Test Dosen",
+    email: "test.dosen@example.com",
+    password: "testpassword"
+};
+
+module.exports = {
+    API_ENDPOINTS,
+    KAFKA_BROKERS,
+    KAFKA_TOPIC_MAHASISWA_EVENTS,
+    KAFKA_TOPIC_ACADEMIC_EVENTS,
+    DB_CONFIG_LOG,
+    DB_CONFIG_MAHASISWA,
+    LECTURER_CREDENTIALS,
+    uuidv4
+};
