@@ -16,7 +16,7 @@ const API_ENDPOINTS = {
 // Pastikan ini adalah IP Pod Kafka internal cluster Anda dan tidak ada typo
 // Gunakan 'kubectl get pods -l app=kafka -o wide' untuk mendapatkan IP Pod Kafka yang Running
 const KAFKA_BROKERS_LIST_STRING = '10.244.1.105:9092'; // Pastikan IP ini benar dan sesuai dengan pod Kafka Anda
-const KAFKA_BROKERS = [KAFKA_BROKERS_LIST_STRING]; // Tambahkan array untuk brokers
+const KAFKA_BROKERS = ['localhost:19092']; // Tambahkan array untuk brokers
 
 console.log('DEBUG Kafka brokers:', KAFKA_BROKERS); // Debug log untuk melihat nilai KAFKA_BROKERS
 
